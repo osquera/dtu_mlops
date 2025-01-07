@@ -10,7 +10,7 @@ PYTHON_VERSION = "3.12"
 @task
 def python(ctx):
     """ """
-    ctx.run("which python" if os.name != "nt" else "where python")
+    ctx.run("which python" if os.name != "nt" else "where python", echo=True, pty=not WINDOWS)
 
 
 @task
