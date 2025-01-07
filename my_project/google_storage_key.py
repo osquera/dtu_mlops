@@ -1,5 +1,4 @@
 from google.cloud import iam_admin_v1
-from google.cloud.iam_admin_v1 import types
 from dotenv import load_dotenv
 import os
 
@@ -15,7 +14,7 @@ def create_key(project_id: str, account: str):
     """
 
     iam_admin_client = iam_admin_v1.IAMClient()
-    request = types.CreateServiceAccountKeyRequest()
+    request = iam_admin_v1 .types.CreateServiceAccountKeyRequest()
     request.name = f"projects/{project_id}/serviceAccounts/{account}"
 
     key = iam_admin_client.create_service_account_key(request=request)
