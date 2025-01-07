@@ -7,6 +7,12 @@ PROJECT_NAME = "my_project"
 PYTHON_VERSION = "3.12"
 
 
+@task
+def python(ctx):
+    """ """
+    ctx.run("which python" if os.name != "nt" else "where python")
+
+
 # Setup commands
 @task
 def create_environment(ctx: Context) -> None:
