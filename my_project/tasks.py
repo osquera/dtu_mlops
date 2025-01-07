@@ -20,7 +20,7 @@ def git(ctx, message):
     ctx.run(f"git push")
 
 @task
-def dvc(ctx, folder="data", message="Add new data"):
+def dvc(ctx, folder="data", message="Add_new_data"):
     ctx.run(f"dvc add {folder}")
     ctx.run(f"git add {folder}.dvc .gitignore")
     ctx.run(f"git commit -m '{message}'")
