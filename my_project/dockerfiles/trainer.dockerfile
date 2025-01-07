@@ -8,7 +8,7 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-COPY <project-name>/ <project-name>/
+COPY src/my_project/ my_project/
 COPY data/ data/
 
 WORKDIR /
