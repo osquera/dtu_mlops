@@ -127,3 +127,6 @@ if __name__ == "__main__":
     activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True, on_trace_ready=tensorboard_trace_handler("logs")
 ) as prof:
         train_vae()
+    print(prof.key_averages().table(sort_by="self_cpu_time_total", row_limit=10))
+
+    
