@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
 import typer
-from my_project_name.model import MyAwesomeModel
+from my_project.model import MyAwesomeModel
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
