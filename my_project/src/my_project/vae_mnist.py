@@ -20,7 +20,8 @@ import logging
 log = logging.getLogger(__name__)
 
 # Config parameters
-config_path = os.getcwd() + os.sep + "configs" + os.sep + "configs.yaml"
+config_path = os.getcwd() + os.sep + "configs" + os.sep 
+config_name = "vae_config.yaml"
 
 # Model Hyperparameters
 dataset_path = os.getcwd() + os.sep + "data"
@@ -29,6 +30,8 @@ DEVICE = torch.device("cuda" if cuda else "cpu")
 batch_size = 100
 x_dim = 784
 hidden_dim = 400
+
+print("DEVICE: ", DEVICE)
 
 # Data loading
 mnist_transform = transforms.Compose([transforms.ToTensor()])
@@ -43,12 +46,15 @@ test_dataset = MNIST(
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
 
-@hydra.main(config_path=config_path)
+
+@hydra.main(config_name=config_name, config_path=config_path)
 def get_model(cfg):
     encoder = Encoder(input_dim=x_dim, hidden_dim=hidden_dim, latent_dim=cfg.hidden_dim)
     decoder = Decoder(latent_dim=cfg.hidden_dim, hidden_dim=hidden_dim, output_dim=x_dim)
 
-    model = Model(Encoder=encoder, Decoder=decoder).to(DEVICE)
+    model = Model(encoder, decoder).to(DEVICE)
+
+    return model
 
 
 def loss_function(x, x_hat, mean, log_var):
@@ -58,7 +64,7 @@ def loss_function(x, x_hat, mean, log_var):
     return reproduction_loss + kld
 
 
-@hydra.main(config_path=config_path)
+@hydra.main(config_name=config_name, config_path=config_path)
 def train_vae(cfg):
     model = get_model(cfg)
     logging.info("Start training VAE...")
