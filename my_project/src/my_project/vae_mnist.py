@@ -74,7 +74,7 @@ def train_vae(cfg):
     optimizer = hydra.utils.instantiate(cfg.optimizer, model.parameters())
 
     model.train()
-    for epoch in range(20):
+    for epoch in range(cfg.epochs):
         overall_loss = 0
         for batch_idx, (x, _) in enumerate(train_loader):
             if batch_idx % 100 == 0:
@@ -124,6 +124,6 @@ def train_vae(cfg):
 
 if __name__ == "__main__":
     with profile(
-    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True
+    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True, on_trace_ready=tensorboard_trace_handler("logs")
 ) as prof:
         train_vae()

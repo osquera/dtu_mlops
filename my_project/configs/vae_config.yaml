@@ -6,3 +6,5 @@ optimizer:
   weight_decay: 0
 
 hidden_dim: 20
+
+epochs: 5
