@@ -14,6 +14,9 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision.utils import save_image
+from torch.profiler import profile, tensorboard_trace_handler
+from torch.profiler import profile, ProfilerActivity
+
 
 import logging
 
@@ -120,4 +123,7 @@ def train_vae(cfg):
     save_image(generated_images.view(batch_size, 1, 28, 28), "generated_sample.png")
 
 if __name__ == "__main__":
-    train_vae()
+    with profile(
+    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True
+) as prof:
+        train_vae()
