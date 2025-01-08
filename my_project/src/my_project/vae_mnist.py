@@ -43,7 +43,7 @@ test_dataset = MNIST(
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
 
-@hydra
+@hydra.main(config_path=config_path)
 def get_model(cfg):
     encoder = Encoder(input_dim=x_dim, hidden_dim=hidden_dim, latent_dim=cfg.hidden_dim)
     decoder = Decoder(latent_dim=cfg.hidden_dim, hidden_dim=hidden_dim, output_dim=x_dim)
