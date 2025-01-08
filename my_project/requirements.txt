@@ -5,3 +5,4 @@ uvicorn==0.34.0
 dvc_gs
 scikit-learn>=1.6.0
 dvc
+hydra-core
