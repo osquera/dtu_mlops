@@ -2,6 +2,7 @@ program: train.py
 name: sweepdemo
 project: dtu_mlops # change this
 entity: antonmosquerastorgaard
+method: bayes
 metric:
   goal: minimize
   name: validation_loss
