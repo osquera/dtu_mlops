@@ -50,6 +50,18 @@ class MyAwesomeModel(pl.LightningModule):
         self.log("val_accuracy", accuracy)
         self.logger.experiment.log({"val_loss": loss.item(), "val_accuracy": accuracy.item()})
         return loss
+    
+    def test_step(self, batch):
+        """Test step."""
+        img, target = batch
+        y_pred = self(img)
+        loss = self.loss_fn(y_pred, target)
+        accuracy = (y_pred.argmax(dim=1) == target).float().mean()
+        self.log("test_loss", loss)
+        self.log("test_accuracy", accuracy)
+        self.logger.experiment.log({"test_loss": loss.item(), "test_accuracy": accuracy.item()})
+        return loss
+    
 
     def configure_optimizers(self):
         """Configure optimizer."""
@@ -81,10 +93,7 @@ if __name__ == "__main__":
     test_loader = torch.utils.data.DataLoader(test_set, batch_size=32)
 
     trainer.fit(model, train_loader, test_loader)
-    print("Training finished!")
     trainer.test(model, test_loader)
-    print("Testing finished!")
-
 
 
 
