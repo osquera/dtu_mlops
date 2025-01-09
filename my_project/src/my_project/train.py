@@ -23,9 +23,10 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
     )
 
     model = MyAwesomeModel().to(DEVICE)
-    train_set, _ = corrupt_mnist()
+    train_set, test_set = corrupt_mnist()
 
     train_dataloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size)
+    test_dataloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size)
 
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -93,6 +94,19 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
     axs[1].plot(statistics["train_accuracy"])
     axs[1].set_title("Train accuracy")
     fig.savefig("reports/figures/training_statistics.png")
+
+    # Validation
+    model.eval()
+    preds, targets = [], []
+    for img, target in test_dataloader:
+        img, target = img.to(DEVICE), target.to(DEVICE)
+        y_pred = model(img)
+        preds.append(y_pred.detach().cpu())
+        targets.append(target.detach().cpu())
+
+    preds = torch.cat(preds, 0)
+    targets = torch.cat(targets, 0)
+
 
     final_accuracy = accuracy_score(targets, preds.argmax(dim=1))
     final_precision = precision_score(targets, preds.argmax(dim=1), average="weighted")
