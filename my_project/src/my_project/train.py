@@ -99,15 +99,13 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
     final_recall = recall_score(targets, preds.argmax(dim=1), average="weighted")
     final_f1 = f1_score(targets, preds.argmax(dim=1), average="weighted")
 
-    # first we save the model to a file then log it as an artifact
-    torch.save(model.state_dict(), "model.pth")
     artifact = wandb.Artifact(
         name="corrupt_mnist_model",
         type="model",
         description="A model trained to classify corrupt MNIST images",
         metadata={"accuracy": final_accuracy, "precision": final_precision, "recall": final_recall, "f1": final_f1},
     )
-    artifact.add_file("model.pth")
+    artifact.add_file("models/model.pth")
     run.log_artifact(artifact)
 
 
