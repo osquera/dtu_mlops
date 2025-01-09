@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
 import hydra
-from my_project.model_s3 import Decoder, Encoder, Model
+from model_s3 import Decoder, Encoder, Model
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
@@ -124,7 +124,7 @@ def train_vae(cfg):
 
 if __name__ == "__main__":
     with profile(
-    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True, on_trace_ready=tensorboard_trace_handler("logs")
+    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], on_trace_ready=tensorboard_trace_handler("logs")
 ) as prof:
         train_vae()
     print(prof.key_averages().table(sort_by="self_cpu_time_total", row_limit=10))
