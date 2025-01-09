@@ -169,3 +169,6 @@ corruptmnist_v2/
 
 # vscode
 .vscode/
+
+# Wandb
+wandb/

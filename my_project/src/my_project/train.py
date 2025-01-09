@@ -51,7 +51,7 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
             preds.append(y_pred.detach().cpu())
             targets.append(target.detach().cpu())
 
-            if i % 100 == 0:
+            if i % 500 == 0:
                 logger.info(f"Epoch {epoch}, iter {i}, loss: {loss.item()}")
                 # add a plot of the input images
                 images = wandb.Image(img[:5].detach().cpu(), caption="Input images")
