@@ -4,4 +4,4 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 RUN pip install wandb
 COPY src/my_project/wandb_tester.py wandb_tester.py
-ENTRYPOINT ["python", "-u", "src/my_project/wandb_tester.py"]
+ENTRYPOINT ["python", "-u", "wandb_tester.py"]
