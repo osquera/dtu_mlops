@@ -1,7 +1,7 @@
 program: train.py
 name: sweepdemo
 project: dtu_,lops  # change this
-entity: antonmosquerastorgaard@gmail.com
+entity: antonmosquerastorgaard
 metric:
     goal: minimize
     name: validation_loss
