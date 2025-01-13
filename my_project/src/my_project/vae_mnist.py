@@ -3,27 +3,24 @@
 A simple implementation of Gaussian MLP Encoder and Decoder trained on MNIST
 """
 
+import logging
 import os
 
+import hydra
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
-import hydra
 from model_s3 import Decoder, Encoder, Model
 from torch.optim import Adam
+from torch.profiler import ProfilerActivity, profile, tensorboard_trace_handler
 from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision.utils import save_image
-from torch.profiler import profile, tensorboard_trace_handler
-from torch.profiler import profile, ProfilerActivity
-
-
-import logging
 
 log = logging.getLogger(__name__)
 
 # Config parameters
-config_path = os.getcwd() + os.sep + "configs" + os.sep 
+config_path = os.getcwd() + os.sep + "configs" + os.sep
 config_name = "vae_config.yaml"
 
 # Model Hyperparameters
@@ -39,12 +36,8 @@ print("DEVICE: ", DEVICE)
 # Data loading
 mnist_transform = transforms.Compose([transforms.ToTensor()])
 
-train_dataset = MNIST(
-    dataset_path, transform=mnist_transform, train=True, download=True
-)
-test_dataset = MNIST(
-    dataset_path, transform=mnist_transform, train=False, download=True
-)
+train_dataset = MNIST(dataset_path, transform=mnist_transform, train=True, download=True)
+test_dataset = MNIST(dataset_path, transform=mnist_transform, train=False, download=True)
 
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
@@ -92,9 +85,7 @@ def train_vae(cfg):
             loss.backward()
             optimizer.step()
 
-        logging.info(
-            f"Epoch {epoch+1} complete!,  Average Loss: {overall_loss / (batch_idx*batch_size)}"
-        )
+        logging.info(f"Epoch {epoch+1} complete!,  Average Loss: {overall_loss / (batch_idx*batch_size)}")
     logging.info("Finish!!")
 
     # save weights
@@ -122,11 +113,10 @@ def train_vae(cfg):
 
     save_image(generated_images.view(batch_size, 1, 28, 28), "generated_sample.png")
 
+
 if __name__ == "__main__":
     with profile(
-    activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], on_trace_ready=tensorboard_trace_handler("logs")
-) as prof:
+        activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], on_trace_ready=tensorboard_trace_handler("logs")
+    ) as prof:
         train_vae()
     print(prof.key_averages().table(sort_by="self_cpu_time_total", row_limit=10))
-
-    

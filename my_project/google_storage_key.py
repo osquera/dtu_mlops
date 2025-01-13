@@ -1,6 +1,7 @@
-from google.cloud import iam_admin_v1
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from google.cloud import iam_admin_v1
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ def create_key(project_id: str, account: str):
     """
 
     iam_admin_client = iam_admin_v1.IAMClient()
-    request = iam_admin_v1 .types.CreateServiceAccountKeyRequest()
+    request = iam_admin_v1.types.CreateServiceAccountKeyRequest()
     request.name = f"projects/{project_id}/serviceAccounts/{account}"
 
     key = iam_admin_client.create_service_account_key(request=request)
@@ -28,8 +29,9 @@ def create_key(project_id: str, account: str):
 
     return key
 
+
 if __name__ == "__main__":
     key = create_key(os.getenv("PROJECT_ID"), os.getenv("SERVICE_ACCOUNT"))
 
-    with open(os.getcwd()+os.sep+ r"\my_project\.env\secrets", "w") as f:
+    with open(os.getcwd() + os.sep + r"\my_project\.env\secrets", "w") as f:
         f.write(f"GOOGLE_APPLICATION_CREDENTIALS={key.private_key_data}")
