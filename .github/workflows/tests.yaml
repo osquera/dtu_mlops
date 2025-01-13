@@ -48,4 +48,4 @@ jobs:
         run: |
           dvc pull
         env:
-            GDRIVE_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
+            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
