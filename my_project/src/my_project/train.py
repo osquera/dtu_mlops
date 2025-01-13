@@ -1,11 +1,13 @@
+import logging
+
 import matplotlib.pyplot as plt
 import torch
 import typer
+import wandb
+from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
+
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
-import logging
-import wandb
-from sklearn.metrics import RocCurveDisplay, accuracy_score, precision_score, recall_score, f1_score
 
 logger = logging.getLogger(__name__)
 
@@ -60,11 +62,7 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
 
                 # add a plot of histogram of the gradients
                 grads = torch.cat(
-                    [
-                        p.grad.flatten()
-                        for p in model.parameters()
-                        if p.grad is not None
-                    ],
+                    [p.grad.flatten() for p in model.parameters() if p.grad is not None],
                     0,
                 )
                 grads = grads.detach().cpu().numpy()
@@ -106,7 +104,6 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
 
     preds = torch.cat(preds, 0)
     targets = torch.cat(targets, 0)
-
 
     final_accuracy = accuracy_score(targets, preds.argmax(dim=1))
     final_precision = precision_score(targets, preds.argmax(dim=1), average="weighted")

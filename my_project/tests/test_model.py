@@ -1,5 +1,6 @@
-import torch
 import pytest
+import torch
+
 from my_project.model import MyAwesomeModel
 
 
@@ -16,5 +17,6 @@ def test_model(batch_size: int) -> None:
     x = torch.randn(batch_size, 1, 28, 28)
     y = model(x)
     assert y.shape == (batch_size, 10)
+
 
 # coverage run --omit="tests/*" -m pytest tests/
