@@ -37,11 +37,14 @@ jobs:
 
       - name: Run tests & coverage
         run: |
+          cd my_project
           coverage run -m pytest tests/
           coverage report -m
 
       - uses: iterative/setup-dvc@v1
       - name: Get data
-        run: dvc pull
+        run: |
+          cd my_project
+          dvc pull
         env:
             GDRIVE_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
