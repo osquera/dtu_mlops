@@ -1,0 +1,9 @@
+torch==2.4.0
+typer==0.15.1
+fastapi==0.115.6
+uvicorn==0.34.0
+dvc_gs
+scikit-learn>=1.6.0
+dvc
+hydra-core
+loguru

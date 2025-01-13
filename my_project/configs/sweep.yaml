@@ -1,0 +1,23 @@
+program: src/my_project/train.py
+name: sweepdemo
+project: dtu_mlops # change this
+entity: antonmosquerastorgaard
+method: bayes
+metric:
+  goal: minimize
+  name: validation_loss
+parameters:
+  lr:
+    min: 0.0001
+    max: 0.1
+    distribution: log_uniform_values
+  batch-size:
+    values: [16, 32, 64]
+  epochs:
+    values: [5, 10, 15]
+run_cap: 10
+command:
+  - ${env}
+  - C:\DTU_HCAI\1_sem\mlops\dtu_mlops\.venv\Scripts\python.exe
+  - ${program}
+  - ${args}
