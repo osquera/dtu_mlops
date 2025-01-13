@@ -49,5 +49,6 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
         run: |
+          dvc remote add -d myremote gs://dtu_mlops_osquera
+          dvc remote modify myremote credentialpath $GOOGLE_APPLICATION_CREDENTIALS
           dvc pull
-        
