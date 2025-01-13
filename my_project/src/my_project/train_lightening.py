@@ -1,8 +1,7 @@
 import pytorch_lightning as pl
 import torch
-from torch import nn
-
 from data import corrupt_mnist
+from torch import nn
 
 
 class MyAwesomeModel(pl.LightningModule):
