@@ -1,8 +1,8 @@
 from pathlib import Path
 
+import torch
 import typer
 from torch.utils.data import Dataset
-import torch
 
 
 class MyDataset(Dataset):

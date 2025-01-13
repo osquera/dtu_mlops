@@ -1,6 +1,7 @@
 import torch
 import typer
 import wandb
+
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
 

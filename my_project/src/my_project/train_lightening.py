@@ -1,7 +1,7 @@
 import pytorch_lightning as pl
 import torch
-from torch import nn
 from data import corrupt_mnist
+from torch import nn
 
 
 class MyAwesomeModel(pl.LightningModule):
@@ -39,7 +39,7 @@ class MyAwesomeModel(pl.LightningModule):
         self.log("train_accuracy", accuracy)
         self.logger.experiment.log({"train_loss": loss.item(), "train_accuracy": accuracy.item()})
         return loss
-    
+
     def validation_step(self, batch):
         """Validation step."""
         img, target = batch
@@ -50,7 +50,7 @@ class MyAwesomeModel(pl.LightningModule):
         self.log("val_accuracy", accuracy)
         self.logger.experiment.log({"val_loss": loss.item(), "val_accuracy": accuracy.item()})
         return loss
-    
+
     def test_step(self, batch):
         """Test step."""
         img, target = batch
@@ -61,7 +61,6 @@ class MyAwesomeModel(pl.LightningModule):
         self.log("test_accuracy", accuracy)
         self.logger.experiment.log({"test_loss": loss.item(), "test_accuracy": accuracy.item()})
         return loss
-    
 
     def configure_optimizers(self):
         """Configure optimizer."""
@@ -84,9 +83,15 @@ if __name__ == "__main__":
         save_top_k=3,
         mode="min",
     )
-    trainer = pl.Trainer(max_epochs=10, limit_train_batches=0.2, callbacks=[checkpoint_callback],
-                          logger=pl.loggers.WandbLogger(project="dtu_mlops"),
-                            accelerator="gpu", devices=1, precision='bf16-true')
+    trainer = pl.Trainer(
+        max_epochs=10,
+        limit_train_batches=0.2,
+        callbacks=[checkpoint_callback],
+        logger=pl.loggers.WandbLogger(project="dtu_mlops"),
+        accelerator="gpu",
+        devices=1,
+        precision="bf16-true",
+    )
 
     train_set, test_set = corrupt_mnist()
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=32)
@@ -94,7 +99,3 @@ if __name__ == "__main__":
 
     trainer.fit(model, train_loader, test_loader)
     trainer.test(model, test_loader)
-
-
-
-

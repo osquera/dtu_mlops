@@ -1,18 +1,28 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools",
+  "setuptools-scm",
+]
 
 [project]
-name = "my_project"
+name = "my-project"
 version = "0.0.1"
 description = "bla"
+readme = "README.md"
+license = { file = "LICENSE" }
 authors = [
   { name = "osquera", email = "your@email.com" },
 ]
-license = { file = "LICENSE" }
-readme = "README.md"
 requires-python = ">=3.12"
-dynamic = ["dependencies", "optional-dependencies"]
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+]
+dynamic = [
+  "dependencies",
+  "optional-dependencies",
+]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

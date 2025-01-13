@@ -19,6 +19,7 @@ def git(ctx, message):
     ctx.run(f"git commit -m '{message}'")
     ctx.run(f"git push")
 
+
 @task
 def dvc(ctx, folder="data", message="Add_new_data"):
     ctx.run(f"dvc add {folder}")
@@ -27,13 +28,16 @@ def dvc(ctx, folder="data", message="Add_new_data"):
     ctx.run(f"git push")
     ctx.run(f"dvc push")
 
+
 @task
 def pull_data(ctx):
     ctx.run("dvc pull")
 
+
 @task(pull_data)
 def train(ctx):
     ctx.run("my_cli train")
+
 
 # Setup commands
 @task
