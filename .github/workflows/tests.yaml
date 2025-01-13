@@ -29,23 +29,23 @@ jobs:
           cache-dependency-path: setup.py
 
       - name: Install dependencies
+        working-directory: my_project
         run: |
-          cd my_project
           python -m pip install -U pip setuptools wheel
           pip install -r requirements.txt
           pip list
 
 
       - name: Run tests & coverage
+        working-directory: my_project
         run: |
-          cd my_project
           coverage run -m pytest tests/
           coverage report -m
 
       - uses: iterative/setup-dvc@v1
       - name: Get data
+        working-directory: my_project
         run: |
-          cd my_project
           dvc pull
         env:
             GDRIVE_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}

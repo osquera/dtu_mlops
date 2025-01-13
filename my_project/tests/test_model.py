@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from my_project.model import MyAwesomeModel
+from src.my_project.model import MyAwesomeModel
 
 
 def test_model():
