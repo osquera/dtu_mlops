@@ -3,9 +3,9 @@ import logging
 import matplotlib.pyplot as plt
 import torch
 import typer
-import wandb
 from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
 
+import wandb
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
 

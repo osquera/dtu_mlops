@@ -3,8 +3,9 @@ import operator
 import os
 
 import typer
-import wandb
 from dotenv import load_dotenv
+
+import wandb
 
 logger = logging.getLogger(__name__)
 load_dotenv()
