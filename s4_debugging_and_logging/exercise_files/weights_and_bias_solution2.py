@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import torch
 import typer
+import wandb
 from sklearn.metrics import RocCurveDisplay
 
-import wandb
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
 
