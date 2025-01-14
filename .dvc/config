@@ -2,4 +2,5 @@
     remote = storage
 ['remote "storage"']
     url = gs://dtu_mlops_osquera
-    credentialpath = ..\my_project\.env\exalted-strata.json
+    credentialpath = ../my_project/.env/exalted-strata.json
+    version_aware = true
