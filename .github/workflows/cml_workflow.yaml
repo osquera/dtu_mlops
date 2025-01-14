@@ -57,12 +57,12 @@ jobs:
     - name: Check data statistics
       working-directory: my_project
       run: |
-        python dataset_statistics.py
+        python src/my_project/dataset_statistics.py
 
     - name: Check data statistics & generate report
       working-directory: my_project
       run: |
-        python src/example_mlops/data.py > data_statistics.md
+        python src/my_project/data_statistics.py > data_statistics.md
         echo '![](./mnist_images.png "MNIST images")' >> data_statistics.md
         echo '![](./train_label_distribution.png "Train label distribution")' >> data_statistics.md
         echo '![](./test_label_distribution.png "Test label distribution")' >> data_statistics.md
