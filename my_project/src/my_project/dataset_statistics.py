@@ -7,7 +7,7 @@ from MNIST_dataset import MnistDataset
 from utils import show_image_and_target
 
 
-def dataset_statistics(datadir: str = "data") -> None:
+def dataset_statistics(datadir: str = os.path.join(os.getcwd(), "data", "raw")) -> None:
     """Compute dataset statistics."""
     train_dataset = MnistDataset(data_folder=datadir, train=True)
     test_dataset = MnistDataset(data_folder=datadir, train=False)
@@ -42,4 +42,4 @@ def dataset_statistics(datadir: str = "data") -> None:
 
 
 if __name__ == "__main__":
-    typer.run(dataset_statistics(datadir=os.path.join(os.getcwd(), "data", "raw")))
+    typer.run(dataset_statistics)
