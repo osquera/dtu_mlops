@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        operating-system: ["ubuntu-latest", "windows-latest"]
+        operating-system: ["ubuntu-latest", "windows-latest", "macos-latest"]
         python-version: ["3.12", "3.11"]
 
     steps:
@@ -42,14 +42,19 @@ jobs:
           coverage run -m pytest tests/
           coverage report -m
 
-      - uses: iterative/setup-dvc@v1
+      - name: Set credentials path
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            echo "CREDENTIALS_PATH=%RUNNER_TEMP%\\credentials.json" >> $GITHUB_ENV
+          else
+            echo "CREDENTIALS_PATH=$RUNNER_TEMP/credentials.json" >> $GITHUB_ENV
+          fi
 
       - name: Get data
-        working-directory: my_project
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
         run: |
-          echo $GOOGLE_APPLICATION_CREDENTIALS > $RUNNER_TEMP/credentials.json
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > "$CREDENTIALS_PATH"
           dvc remote add -d myremote gs://dtu_mlops_osquera
-          dvc remote modify myremote credentialpath $RUNNER_TEMP/credentials.json
-          dvc pull
+          dvc remote modify myremote credentialpath "$CREDENTIALS_PATH"
+          dvc pull -r myremote
