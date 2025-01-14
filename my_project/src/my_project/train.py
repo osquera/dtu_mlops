@@ -3,9 +3,9 @@ import logging
 import matplotlib.pyplot as plt
 import torch
 import typer
-import wandb
 from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
 
+import wandb
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
 
@@ -21,7 +21,7 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
     logger.info(f"{lr=}, {batch_size=}, {epochs=}")
 
     run = wandb.init(
-        project="dtu_mlops",
+        project="mlopsos",
         config={"lr": lr, "batch_size": batch_size, "epochs": epochs},
     )
 
