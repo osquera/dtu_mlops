@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import torch
 import typer
-import wandb
 from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
 
+import wandb
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
 
@@ -69,8 +69,9 @@ def train(lr: float = 0.001, batch_size: int = 32, epochs: int = 5) -> None:
                 plot_chance_level=(class_id == 2),
             )
 
+        # alternatively use wandb.log({"roc": wandb.Image(plt)}
         wandb.plot({"roc": plt})
-        # alternatively the wandb.plot.roc_curve function can be used
+        plt.close()  # close the plot to avoid memory leaks and overlapping figures
 
     final_accuracy = accuracy_score(targets, preds.argmax(dim=1))
     final_precision = precision_score(targets, preds.argmax(dim=1), average="weighted")
