@@ -2,8 +2,8 @@ import os
 import time
 
 import torch
-
 import wandb
+
 from src.my_project.model import MyAwesomeModel
 
 model_checkpoint = os.getenv("MODEL_NAME")
