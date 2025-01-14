@@ -42,4 +42,4 @@ def dataset_statistics(datadir: str = "data") -> None:
 
 
 if __name__ == "__main__":
-    typer.run(dataset_statistics(datadir=os.getcwd() + r"\data\raw"))
+    typer.run(dataset_statistics(datadir=os.getcwd() + os.sep + "data" + os.sep + "raw"))
