@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as plt
 import torch
 import typer
@@ -17,7 +19,7 @@ def dataset_statistics(datadir: str = "data") -> None:
     print(f"Number of images: {len(test_dataset)}")
     print(f"Image shape: {test_dataset[0][0].shape}")
 
-    show_image_and_target(train_dataset.images[:25], train_dataset.target[:25], show=False)
+    show_image_and_target(train_dataset.images[:25], train_dataset.target[:25])
     plt.savefig("mnist_images.png")
     plt.close()
 
@@ -40,4 +42,4 @@ def dataset_statistics(datadir: str = "data") -> None:
 
 
 if __name__ == "__main__":
-    typer.run(dataset_statistics(datadir=r"data\MNIST\raw"))
+    typer.run(dataset_statistics(datadir=os.getcwd() + r"\data\raw"))

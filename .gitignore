@@ -174,3 +174,6 @@ tools/repo_stats/README.md
 
 # Wandb
 wandb/
+
+# images
+*.png
