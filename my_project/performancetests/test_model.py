@@ -2,9 +2,13 @@ import os
 import time
 
 import torch
-import wandb
 
-from my_project.models import MyModel
+import wandb
+from src.my_project.model import MyAwesomeModel
+
+model_checkpoint = os.getenv("MODEL_NAME")
+
+logdir = "wandb_artifacts"
 
 
 def load_model(artifact):
@@ -18,7 +22,7 @@ def load_model(artifact):
     artifact = api.artifact(model_checkpoint)
     artifact.download(root=logdir)
     file_name = artifact.files()[0].name
-    return MyModel.load_from_checkpoint(f"{logdir}/{file_name}")
+    return MyAwesomeModel.load_from_checkpoint(f"{logdir}/{file_name}")
 
 
 def test_model_speed():
