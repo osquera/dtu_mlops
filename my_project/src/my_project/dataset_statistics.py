@@ -40,4 +40,4 @@ def dataset_statistics(datadir: str = "data") -> None:
 
 
 if __name__ == "__main__":
-    typer.run(dataset_statistics)
+    typer.run(dataset_statistics(datadir=r"data\MNIST\raw"))
