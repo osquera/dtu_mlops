@@ -35,26 +35,17 @@ jobs:
           pip install -r requirements.txt
           pip list
 
+      - name: Auth with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
+
+      - name: Pull data
+        run: |
+          dvc pull --no-run-cache
 
       - name: Run tests & coverage
         working-directory: my_project
         run: |
           coverage run -m pytest tests/
           coverage report -m
-
-      - name: Set credentials path
-        run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then
-            echo "CREDENTIALS_PATH=%RUNNER_TEMP%\\credentials.json" >> $GITHUB_ENV
-          else
-            echo "CREDENTIALS_PATH=$RUNNER_TEMP/credentials.json" >> $GITHUB_ENV
-          fi
-
-      - name: Get data
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
-        run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS" > "$CREDENTIALS_PATH"
-          dvc remote add -d myremote gs://dtu_mlops_osquera
-          dvc remote modify myremote credentialpath "$CREDENTIALS_PATH"
-          dvc pull -r myremote
