@@ -45,13 +45,15 @@ jobs:
           fi
 
       - name: Get data
+        working-directory: my_project
+        shell: bash
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS" > "$CREDENTIALS_PATH"
-          dvc remote add -d myremote gs://dtu_mlops_osquera
-          dvc remote modify myremote credentialpath "$CREDENTIALS_PATH"
-          dvc pull -r myremote
+          dvc remote add -d storage gs://dtu_mlops_osquera
+          dvc remote modify storage credentialpath "$CREDENTIALS_PATH"
+          dvc pull -r storage
 
 
       - name: Run tests & coverage
