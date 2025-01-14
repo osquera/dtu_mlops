@@ -71,6 +71,7 @@ jobs:
       uses: iterative/setup-cml@v2
 
     - name: Comment on PR
+      working-directory: my_project
       env:
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
