@@ -51,8 +51,8 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS" > "$CREDENTIALS_PATH"
-          dvc remote add -d storage gs://dtu_mlops_osquera
-          dvc remote modify storage credentialpath "$CREDENTIALS_PATH"
+          dvc remote add -d storage -f gs://dtu_mlops_osquera
+          dvc remote modify storage -f credentialpath "$CREDENTIALS_PATH"
           dvc pull -r storage
 
 
