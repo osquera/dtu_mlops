@@ -3,8 +3,8 @@ import time
 
 import dotenv
 import torch
-
 import wandb
+
 from src.my_project.model import MyAwesomeModel
 
 dotenv.load_dotenv(".env/.env")
