@@ -47,6 +47,7 @@ jobs:
         cache-dependency-path: setup.py
 
     - name: Install dependencies
+      working-directory: my_project
       run: |
         pip install -r requirements.txt
         pip list
@@ -88,4 +89,4 @@ jobs:
     - name: Add production alias
       working-directory: my_project
       run: |
-        python link_model.py $MODEL_NAME -a production
+        python src/my_project/link_model.py $MODEL_NAME -a production
