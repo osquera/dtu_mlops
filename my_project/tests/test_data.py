@@ -4,7 +4,7 @@ import pytest
 import torch
 from torch.utils.data import Dataset
 
-from my_project.data import MyDataset, corrupt_mnist
+from src.my_project.data import MyDataset, corrupt_mnist
 
 _TEST_ROOT = os.path.dirname(__file__)  # root of test folder
 _PROJECT_ROOT = os.path.dirname(_TEST_ROOT)  # root of project

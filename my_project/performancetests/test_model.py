@@ -5,7 +5,7 @@ import dotenv
 import torch
 
 import wandb
-from my_project.model import MyAwesomeModel
+from src.my_project.model import MyAwesomeModel
 
 dotenv.load_dotenv(".env/.env")
 
