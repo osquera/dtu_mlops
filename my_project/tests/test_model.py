@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from src.my_project.model import MyAwesomeModel
+from my_project.model import MyAwesomeModel
 
 
 def test_model():
@@ -20,3 +20,6 @@ def test_model(batch_size: int) -> None:
 
 
 # coverage run --omit="tests/*" -m pytest tests/
+
+if __name__ == "__main__":
+    test_model()

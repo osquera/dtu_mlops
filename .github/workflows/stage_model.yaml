@@ -4,10 +4,6 @@ on:
   repository_dispatch:
     types: [staged_model]
 
-  push:
-    branches:
-      - main
-
 jobs:
   identify_event:
     runs-on: ubuntu-latest
@@ -69,6 +65,7 @@ jobs:
     - name: Echo model name
       run: |
         echo "Model name: $MODEL_NAME"
+
 
     - name: Checkout code
       uses: actions/checkout@v4
