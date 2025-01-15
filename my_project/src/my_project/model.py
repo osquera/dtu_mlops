@@ -25,6 +25,10 @@ class MyAwesomeModel(nn.Module):
         x = self.dropout(x)
         return self.fc1(x)
 
+    def load_from_checkpoint(self, checkpoint_path: str):
+        """Load model from checkpoint."""
+        return torch.load(checkpoint_path)
+
 
 if __name__ == "__main__":
     model = MyAwesomeModel()

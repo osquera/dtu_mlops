@@ -1,7 +1,11 @@
 import os
 
+import dotenv
 import typer
+
 import wandb
+
+dotenv.load_dotenv(".env/.env")
 
 
 def link_model(artifact_path: str, aliases: list[str] = ["staging"]) -> None:
@@ -33,7 +37,7 @@ def link_model(artifact_path: str, aliases: list[str] = ["staging"]) -> None:
 
     artifact = api.artifact(artifact_path)
     artifact.link(
-        target_path=f"{os.getenv('WANDB_ENTITY')}/model-registry/{artifact_name}",
+        target_path=f"{os.getenv('WANDB_ENTITY')}/wandb-registry-model/{artifact_name}",
         aliases=aliases,
     )
     artifact.save()

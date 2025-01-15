@@ -89,4 +89,4 @@ jobs:
     - name: Add production alias
       working-directory: my_project
       run: |
-        python src/my_project/link_model.py --artifact-path $MODEL_NAME -aliases production
+        python src/my_project/link_model.py $MODEL_NAME --aliases production
