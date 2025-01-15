@@ -3,8 +3,8 @@ import time
 
 import dotenv
 import torch
-import wandb
 
+import wandb
 from src.my_project.model import MyAwesomeModel
 
 dotenv.load_dotenv(".env/.env")
@@ -23,7 +23,7 @@ def load_model(model_checkpoint: str) -> MyAwesomeModel:
     artifact = api.artifact(model_checkpoint, type="model")
     artifact.download(root=logdir)
     file_name = artifact.files()[0].name
-    model = torch.load(f"{logdir}/{file_name}")
+    model = torch.load(f"{logdir}/{file_name}", map_location=torch.device("cpu"))
     structured_model = MyAwesomeModel()
     structured_model.load_state_dict(model)
     return structured_model
