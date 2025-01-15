@@ -2,7 +2,6 @@ import os
 
 import dotenv
 import typer
-
 import wandb
 
 dotenv.load_dotenv(".env/.env")
