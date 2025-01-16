@@ -18,3 +18,4 @@ ipython == 8.31.0
 invoke == 2.2.0
 coverage
 pytest
+pytest-cov
