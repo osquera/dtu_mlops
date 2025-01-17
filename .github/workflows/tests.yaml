@@ -80,4 +80,8 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
           PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
           GCP_REGISTRY: ${{ secrets.GCP_REGISTRY }}
-        run: gcloud builds submit --config cloudbuild_containers.yaml
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > "$CREDENTIALS_PATH"
+          gcloud auth activate-service-account --key-file="$CREDENTIALS_PATH"
+          gcloud config set project $PROJECT_ID
+          gcloud builds submit --config cloudbuild_containers.yaml
