@@ -77,7 +77,7 @@ jobs:
       - name: Submit build
         working-directory: my_project
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_CREDENTIALS_DATA }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS_REGISTRY }}
           PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
           GCP_REGISTRY: ${{ secrets.GCP_REGISTRY }}
         run: |
