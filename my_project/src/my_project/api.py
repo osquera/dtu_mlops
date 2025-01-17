@@ -2,6 +2,8 @@ import re
 from enum import Enum
 from http import HTTPStatus
 
+import numpy as np
+import onnxruntime
 from fastapi import FastAPI
 
 
@@ -64,3 +66,18 @@ def contains_email(data: str):
         "is_email": re.fullmatch(regex, data) is not None,
     }
     return response
+
+
+@app.get("/predict")
+def predict():
+    """Predict using ONNX model."""
+    # Load the ONNX model
+    model = onnxruntime.InferenceSession("models/model.onnx")
+
+    # Prepare the input data
+    input_data = {"input": np.random.rand(1, 3).astype(np.float32)}
+
+    # Run the model
+    output = model.run(None, input_data)
+
+    return {"output": output[0].tolist()}

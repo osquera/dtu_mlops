@@ -3,10 +3,11 @@ import logging
 import matplotlib.pyplot as plt
 import torch
 import typer
-import wandb
-from data import corrupt_mnist
 from model import MyAwesomeModel
 from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
+
+import wandb
+from data import corrupt_mnist
 
 logger = logging.getLogger(__name__)
 
@@ -118,6 +119,21 @@ def train(lr: float = 1e-3, batch_size: int = 32, epochs: int = 5) -> None:
     )
     artifact.add_file("models/model.pth")
     run.log_artifact(artifact)
+
+    run.finish()
+
+    model.eval()
+    img, target = next(iter(test_dataloader))
+    img, target = img.to(DEVICE), target.to(DEVICE)
+
+    torch.onnx.export(
+        model,
+        img,
+        "models/model.onnx",
+        input_names=["input"],
+        output_names=["output"],
+        opset_version=11,
+    )
 
 
 if __name__ == "__main__":
