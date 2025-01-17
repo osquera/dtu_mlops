@@ -1,17 +1,24 @@
 # Base image
 FROM python:3.12-slim
 
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+EXPOSE $PORT
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    software-properties-common \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
 
-COPY requirements.txt .
-COPY pyproject.toml .
-COPY src/my_project/ .
 
-RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install . --no-deps --no-cache-dir
+COPY requirements_api.txt requirements_api.txt
+COPY pyproject_api.toml pyproject_api.toml
+COPY src/my_project/api.py api.py
 
-ENTRYPOINT ["uvicorn", "src/my_project/api:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN mv pyproject_api.toml pyproject.toml
+
+RUN pip install -r requirements_api.txt --no-cache-dir
+RUN pip install pydantic
+
+CMD exec uvicorn api:app --port $PORT --host 0.0.0.0 --workers 1

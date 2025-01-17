@@ -1,0 +1,22 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools",
+  "setuptools-scm",
+]
+
+
+[project]
+name = "my-project"
+version = "0.0.1"
+description = "bla"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+  { name = "osquera", email = "antonmosquerastorgaard@gmail.com" },
+]
+requires-python = ">=3.12"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+]
