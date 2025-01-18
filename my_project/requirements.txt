@@ -132,7 +132,6 @@ torchaudio
 torchmetrics
 torchvision
 tornado
-tqdm
 transformers
 typer
 types-python-dateutil
