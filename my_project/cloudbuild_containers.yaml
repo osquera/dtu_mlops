@@ -5,7 +5,7 @@ steps:
     'build',
     '.',
     '-t',
-    'europe-west3-docker.pkg.dev/$PROJECT_ID/$GCP_REGISTRY/my_fastapi_app:latest',
+    'europe-west3-docker.pkg.dev/$PROJECT_ID/mlops-container-registry/my_fastapi_app:latest',
     '-f',
     'dockerfiles/api.dockerfile'
   ]
@@ -13,7 +13,7 @@ steps:
   id: 'Push container image'
   args: [
     'push',
-    'europe-west3-docker.pkg.dev/$PROJECT_ID/$GCP_REGISTRY/my_fastapi_app:latest'
+    'europe-west3-docker.pkg.dev/$PROJECT_ID/mlops-container-registry/my_fastapi_app:latest'
   ]
 - name: 'gcr.io/cloud-builders/gcloud'
   id: 'Deploy to Cloud Run'
@@ -22,7 +22,7 @@ steps:
     'deploy',
     'my-fastapi-app',
     '--image',
-    'europe-west3-docker.pkg.dev/$PROJECT_ID/$GCP_REGISTRY/my_fastapi_app:latest',
+    'europe-west3-docker.pkg.dev/$PROJECT_ID/mlops-container-registry/my_fastapi_app:latest',
     '--region',
     'europe-west3',
     '--platform',
