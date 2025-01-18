@@ -15,7 +15,7 @@ WORKDIR /
 COPY requirements_api.txt requirements_api.txt
 COPY pyproject_api.toml pyproject_api.toml
 COPY src/my_project/api.py api.py
-COPY models/model.onnx /models/model.onnx
+COPY models/model.onnx models/model.onnx
 
 RUN mv pyproject_api.toml pyproject.toml
 

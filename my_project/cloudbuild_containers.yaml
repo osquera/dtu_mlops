@@ -7,7 +7,8 @@ steps:
     '-t',
     'europe-west3-docker.pkg.dev/$PROJECT_ID/mlops-container-registry/my_fastapi_app:latest',
     '-f',
-    'dockerfiles/api.dockerfile'
+    'dockerfiles/api.dockerfile',
+    '"my_project"'
   ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Push container image'
