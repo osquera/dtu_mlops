@@ -180,7 +180,6 @@ cython_debug/
 *.pth
 *.pt
 /data
-*.onnx
 
 # Secrets
 .env/

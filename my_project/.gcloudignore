@@ -3,10 +3,20 @@ data/
 .pytest_cache/
 checkpoints/
 wandb/
+tests/
+reports/
+performancetests/
+outputs/
+integrationtests/
+docs/
+.env/
+*.md
+wandb_artifacts/
+.ruff_cache/
+
 
 # Ignore files
 *.png
 *.jpeg
 
-# Keep models
-!models/model.onnx
+!include:.gitignore

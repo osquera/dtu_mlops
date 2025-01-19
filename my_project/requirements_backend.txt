@@ -1,0 +1,5 @@
+fastapi[standard]
+Pillow
+uvicorn
+onnxruntime-gpu
+onnxruntime
