@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /
 
-
 COPY requirements_api.txt requirements_api.txt
 COPY pyproject_api.toml pyproject_api.toml
 COPY src/my_project/api.py api.py

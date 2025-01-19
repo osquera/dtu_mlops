@@ -4,3 +4,6 @@
 
 # Ignore my_project/data
 my_project/data
+
+# Dont ignore my_project/models
+!my_project/models

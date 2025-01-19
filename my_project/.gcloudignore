@@ -1,0 +1,9 @@
+# Ignore data
+data/
+.pytest_cache/
+checkpoints/
+wandb/
+
+# Ignore files
+*.png
+*.jpeg
