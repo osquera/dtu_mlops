@@ -3,11 +3,10 @@ import logging
 import matplotlib.pyplot as plt
 import torch
 import typer
-from model import MyAwesomeModel
-from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
-
 import wandb
 from data import corrupt_mnist
+from model import MyAwesomeModel
+from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
 
 logger = logging.getLogger(__name__)
 
