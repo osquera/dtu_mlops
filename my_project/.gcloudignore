@@ -9,4 +9,4 @@ wandb/
 *.jpeg
 
 # Keep models
-!models/
+!models/model.onnx
