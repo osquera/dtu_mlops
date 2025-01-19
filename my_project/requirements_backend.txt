@@ -1,5 +1,5 @@
 fastapi[standard]
 Pillow
 uvicorn
-onnxruntime-gpu
+numpy
 onnxruntime

@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc git && \
@@ -15,4 +15,4 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements_front
 
 EXPOSE $PORT
 
-ENTRYPOINT ["streamlit", "run", "frontend.py", "--server.port", "$PORT", "--server.address=0.0.0.0"]
+ENTRYPOINT ["sh", "-c", "streamlit run frontend.py --server.port $PORT --server.address=0.0.0.0"]

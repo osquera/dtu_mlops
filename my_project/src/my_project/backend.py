@@ -1,13 +1,11 @@
-import json
 import os
 from contextlib import asynccontextmanager
 
 import anyio
+import numpy as np
 import onnxruntime
-import torch
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
-from torchvision import transforms
 
 
 @asynccontextmanager
@@ -17,15 +15,6 @@ async def lifespan(app: FastAPI):
     # Load MNIST model
     model = onnxruntime.InferenceSession(os.path.join(os.getcwd(), "models", "model.onnx"))
 
-    # Load the image transformation pipeline
-    transform = transforms.Compose(
-        [
-            transforms.Resize((28, 28)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=(0.5,), std=(0.5,)),
-        ]
-    )
-
     yield
 
 
@@ -34,13 +23,15 @@ app = FastAPI(lifespan=lifespan)
 
 def predict_image(image_path: str) -> str:
     """Predict image class (or classes) given image path and return the result."""
-    img = Image.open(image_path).convert("L")
-    img = transform(img).unsqueeze(0)
-    # image shape is (1, 1, 28, 28) and it
-    output = model.run(None, {"input": img.numpy()})[0]
-    probs = torch.tensor(output).softmax(dim=-1)
-    _, predicted_idx = torch.max(probs, 1)
-    return probs, predicted_idx.item()
+    img = Image.open(image_path).convert("L").resize((28, 28))
+    np_img = np.array(img, dtype=np.float32)
+    np_img = (np_img / 255.0) * 2.0 - 1.0  # Normalize to [-1, 1]
+    np_img = np_img[np.newaxis, np.newaxis, :, :]  # Shape [1,1,28,28]
+    output = model.run(None, {"input": np_img})[0]
+    exp_out = np.exp(output)
+    probabilities = exp_out / np.sum(exp_out, axis=1, keepdims=True)
+    prediction = int(np.argmax(probabilities, axis=1)[0])
+    return probabilities, prediction
 
 
 @app.get("/")
