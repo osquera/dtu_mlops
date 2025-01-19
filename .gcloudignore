@@ -1,0 +1,6 @@
+# Ignore everything that is not in my_project
+**/*
+!my_project/
+
+# Ignore my_project/data
+my_project/data
