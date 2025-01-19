@@ -10,6 +10,7 @@ WORKDIR /app
 
 COPY requirements_frontend.txt /app/requirements_frontend.txt
 COPY src/my_project/frontend.py /app/frontend.py
+COPY .env/registry.json /app/.env/registry.json
 
 RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements_frontend.txt
 

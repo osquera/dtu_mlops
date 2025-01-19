@@ -13,7 +13,7 @@ def get_backend_url():
     client = run_v2.ServicesClient()
     services = client.list_services(parent=parent)
     for service in services:
-        if service.name.split("/")[-1] == "my-fastapi-app":
+        if service.name.split("/")[-1] == "backend":
             return service.uri
     name = os.environ.get("BACKEND", None)
     return name
@@ -21,8 +21,8 @@ def get_backend_url():
 
 def classify_image(image, backend):
     """Send the image to the backend for classification."""
-    predict_url = f"{backend}/predict"
-    response = requests.post(predict_url, files={"image": image}, timeout=10)
+    predict_url = f"{backend}/classify/"
+    response = requests.post(predict_url, files={"file": image})
     if response.status_code == 200:
         return response.json()
     return None
@@ -52,10 +52,7 @@ def main() -> None:
             st.write("Prediction:", prediction)
 
             # make a nice bar chart
-            data = {
-                "Class": [f"Class {i}" for i in range(10)],
-                "Probability": probabilities,
-            }
+            data = {"Class": [f"Class {i}" for i in range(10)], "Probability": probabilities[0]}
             df = pd.DataFrame(data)
             df.set_index("Class", inplace=True)
             st.bar_chart(df, y="Probability")
