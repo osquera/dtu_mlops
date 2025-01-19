@@ -7,3 +7,6 @@ wandb/
 # Ignore files
 *.png
 *.jpeg
+
+# Keep models
+!models/
