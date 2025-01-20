@@ -179,7 +179,9 @@ cython_debug/
 # Data and models
 *.pth
 *.pt
+*.ckpt
 /data
+*database.csv
 
 # Secrets
 .env/
@@ -191,3 +193,6 @@ checkpoints/
 
 # image files
 *.png
+
+# Evidently reports
+reports/
