@@ -3,3 +3,5 @@ Pillow
 uvicorn
 numpy
 onnxruntime
+pydantic
+google-cloud-storage

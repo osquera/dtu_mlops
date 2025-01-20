@@ -16,6 +16,5 @@ COPY src/my_project/backend.py /app/backend.py
 COPY models/model.onnx models/model.onnx
 
 RUN pip install -r requirements_backend.txt --no-cache-dir
-RUN pip install pydantic
 
 CMD exec uvicorn backend:app --port $PORT --host 0.0.0.0
