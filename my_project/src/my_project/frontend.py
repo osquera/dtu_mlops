@@ -19,10 +19,10 @@ def get_backend_url():
     return name
 
 
-def classify_image(image, backend):
+def classify_image(image, image_name, backend):
     """Send the image to the backend for classification."""
     predict_url = f"{backend}/classify/"
-    response = requests.post(predict_url, files={"file": image})
+    response = requests.post(predict_url, files={"image": (image_name, image)})
     if response.status_code == 200:
         return response.json()
     return None
@@ -41,7 +41,8 @@ def main() -> None:
 
     if uploaded_file is not None:
         image = uploaded_file.read()
-        result = classify_image(image, backend=backend)
+        image_name = uploaded_file.name
+        result = classify_image(image, image_name, backend)
 
         if result is not None:
             prediction = result["prediction"]
@@ -52,7 +53,7 @@ def main() -> None:
             st.write("Prediction:", prediction)
 
             # make a nice bar chart
-            data = {"Class": [f"Class {i}" for i in range(10)], "Probability": probabilities[0]}
+            data = {"Class": [f"Class {i}" for i in range(10)], "Probability": probabilities}
             df = pd.DataFrame(data)
             df.set_index("Class", inplace=True)
             st.bar_chart(df, y="Probability")
