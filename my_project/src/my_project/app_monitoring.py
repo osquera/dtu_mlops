@@ -43,7 +43,7 @@ def run_analysis(reference_data: pd.DataFrame, current_data: pd.DataFrame) -> No
         ]
     )
     text_overview_report.run(reference_data=reference_data, current_data=current_data)
-    text_overview_report.save("text_overview_report.html")
+    text_overview_report.save("monitoring.html")
 
 
 def lifespan(app: FastAPI):
@@ -127,7 +127,7 @@ async def get_report(n: int = 5):
     run_analysis(df_train, prediction_data)
 
     async with await anyio.open_file("monitoring.html", encoding="utf-8") as f:
-        html_content = f.read()
+        html_content = await f.read()
 
     return HTMLResponse(content=html_content, status_code=200)
 
