@@ -67,7 +67,6 @@ def load_latest_files(directory: Path, n: int) -> pd.DataFrame:
 
     files = sorted(file_names, key=os.path.getctime)
 
-    # Get the N latest files
     latest_files = files[-n:]
 
     # Load or process the files as needed
