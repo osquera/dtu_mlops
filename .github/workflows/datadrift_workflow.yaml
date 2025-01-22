@@ -4,10 +4,10 @@ on:
   push:
     branches:
     - main
-    paths:
-    - 'src/my_project/app_monitoring.py'
-    tags-ignore:
-    - '*'
+    # paths:
+    # - 'src/my_project/app_monitoring.py'
+    # tags-ignore:
+    # - '*'
 
 jobs:
   build:
