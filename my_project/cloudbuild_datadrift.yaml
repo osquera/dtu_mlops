@@ -10,7 +10,7 @@ steps:
     '.'
   ]
 - name: 'gcr.io/cloud-builders/docker'
-  id: 'Push container image for
+  id: 'Push container image for datadrift'
   args: [
     'push',
     'europe-west3-docker.pkg.dev/$PROJECT_ID/mlops-container-registry/datadrift:latest'
