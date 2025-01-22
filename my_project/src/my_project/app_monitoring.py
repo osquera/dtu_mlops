@@ -65,7 +65,6 @@ def load_latest_files(directory: Path, n: int) -> pd.DataFrame:
     # Download the latest prediction files from the GCP bucket
     file_names = download_files(n=n)
 
-    # Sort files based on when they where created
     files = sorted(file_names, key=os.path.getctime)
 
     # Get the N latest files
