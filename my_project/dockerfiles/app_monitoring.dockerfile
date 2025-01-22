@@ -9,4 +9,4 @@ COPY src/my_project/image_analysis.py /app/image_analysis.py
 
 EXPOSE $PORT
 
-CMD exec uvicorn app_monitoring:app --port $PORT --host 0.0.0.0 --workers 1
+CMD exec uvicorn app_monitoring:app --port $PORT --host 0.0.0.0
