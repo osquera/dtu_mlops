@@ -8,6 +8,7 @@ import numpy as np
 import onnxruntime
 from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
 from google.cloud import storage
+from image_analysis import calculate_image_characteristics
 from PIL import Image
 from pydantic import BaseModel
 
@@ -33,50 +34,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-def calculate_image_characteristics(filepath: str):
-    """Calculate image characteristics."""
-    with Image.open(filepath) as img:
-        img_np = np.array(img)
-
-        # Calculate mean and standard deviation for each channel
-        avg_brightness_green = np.mean(img_np[:, :, 1])
-        contrast_green = np.std(img_np[:, :, 1])
-        sharpness_green = np.mean(np.abs(np.gradient(img_np[:, :, 1])))
-        avg_brightness_red = np.mean(img_np[:, :, 0])
-        contrast_red = np.std(img_np[:, :, 0])
-        sharpness_red = np.mean(np.abs(np.gradient(img_np[:, :, 0])))
-        avg_brightness_blue = np.mean(img_np[:, :, 2])
-        contrast_blue = np.std(img_np[:, :, 2])
-        sharpness_blue = np.mean(np.abs(np.gradient(img_np[:, :, 2])))
-
-        # Total image characteristics
-        avg_brightness = np.mean(img_np)
-        contrast = np.std(img_np)
-        sharpness = np.mean(np.abs(np.gradient(img_np)))
-
-        return {
-            "avg_brightness_green": avg_brightness_green,
-            "contrast_green": contrast_green,
-            "sharpness_green": sharpness_green,
-            "avg_brightness_red": avg_brightness_red,
-            "contrast_red": contrast_red,
-            "sharpness_red": sharpness_red,
-            "avg_brightness_blue": avg_brightness_blue,
-            "contrast_blue": contrast_blue,
-            "sharpness_blue": sharpness_blue,
-            "avg_brightness": avg_brightness,
-            "contrast": contrast,
-            "sharpness": sharpness,
-        }
-
-
 def save_prediction_to_gcp(filepath: str, filename: str, prediction: int, probabilities: list[float]):
     """Save the prediction results to GCP bucket."""
     client = storage.Client()
     bucket = client.bucket("dtu_mlops_osquera")
     time = datetime.now(tz=timezone.utc)
 
-    image_characteristics = calculate_image_characteristics(filepath)
+    image_characteristics = calculate_image_characteristics(filepath, rgb=False)
 
     # Prepare prediction data
     data = {

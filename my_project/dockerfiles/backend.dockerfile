@@ -14,6 +14,7 @@ WORKDIR /app
 COPY requirements_backend.txt /app/requirements_backend.txt
 COPY src/my_project/backend.py /app/backend.py
 COPY models/model.onnx models/model.onnx
+COPY src/my_project/image_analysis.py /app/image_analysis.py
 
 RUN pip install -r requirements_backend.txt --no-cache-dir
 
